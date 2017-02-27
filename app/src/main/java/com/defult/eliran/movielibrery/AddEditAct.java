@@ -76,7 +76,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         linearLayout= (LinearLayout) findViewById(R.id.editLayout);
         UrlET = (EditText) findViewById(R.id.UrlET);
         movieIV = (ImageView) findViewById(R.id.movieIV);
-        movieIV.setVisibility(View.INVISIBLE);
+        //movieIV.setVisibility(View.INVISIBLE);
         movieIV.setImageResource(R.drawable.camera);
         ShowBtn = (Button) findViewById(R.id.ShowBtn);
         OkBtn = (Button) findViewById(R.id.OkBtn);
@@ -119,7 +119,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
             RatingET.setText(intent.getStringExtra("rating"));
             if (!imagebase64.equals("")) {
                 movieIV.setImageBitmap(decodeBase64(imagebase64));
-                linearLayout.setBackground(movieIV.getDrawable());
+                //linearLayout.setBackground(movieIV.getDrawable());
 
             }
         }
@@ -325,7 +325,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
             bitmap = result;
             imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
             movieIV.setImageBitmap(decodeBase64(imagebase64));
-            linearLayout.setBackground(movieIV.getDrawable());
+            //linearLayout.setBackground(movieIV.getDrawable());
             progressDialog.dismiss();
             activity_add_edit.setFocusable(true);
             activity_add_edit.getDrawingCache(true);
