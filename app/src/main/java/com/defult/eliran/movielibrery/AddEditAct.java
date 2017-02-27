@@ -140,6 +140,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.ShowBtn:
                 //set image bitmap with decode
+                //TODO permission to camera
+                //TODO if its from edit make add show image url button or film from camera
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, 1);
                 break;

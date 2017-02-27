@@ -16,7 +16,7 @@ ImageView FullScreenIV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO show me the old image
+        //this activity show the image in full screen
         setContentView(R.layout.activity_image_full_screen);
         FullScreenIV= (ImageView) findViewById(R.id.FullScreenIV);
        Intent intent=getIntent();

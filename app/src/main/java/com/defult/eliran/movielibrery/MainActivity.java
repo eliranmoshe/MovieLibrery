@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         MovieLV = (ListView) findViewById(R.id.MovieLV);
         sqlHelper = new SqlHelper(this);
         cursor = sqlHelper.getReadableDatabase().query(DbConstant.tablename, null, null, null, null, null, null);
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 //get the cuurent movie ID that the user touched
                 cursor.moveToPosition(i);
                 Id = cursor.getInt(cursor.getColumnIndex(DbConstant.idname));
-                //TODO doesnt intent without image
-                //TODO change the activity label
                 intenttoedit(""+Id);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
