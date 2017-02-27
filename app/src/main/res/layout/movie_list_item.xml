@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="9dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:weightSum="4"
+        android:background="@color/colorAccent"
+        android:layout_height="80dp">
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/WatchCB"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:gravity="center_vertical|fill_horizontal"
+            android:text="@string/CheckBox"
+            android:textColor="@android:color/background_light"
+            android:shadowColor="@android:color/background_dark" />
+
+        <TextView
+            android:text="@string/MovieItemTV"
+            android:layout_width="0dp"
+            android:id="@+id/MovieItemTV"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@android:color/background_light"
+            android:layout_weight="1.9" />
+
+        <TextView
+            android:text="@string/RatingTV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/RatingItemTV"
+            android:layout_weight="0.6"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/background_light" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/cc"
+            android:id="@+id/ItemIV"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
+</LinearLayout>

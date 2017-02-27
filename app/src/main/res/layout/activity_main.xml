@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:orientation="vertical"
+    tools:context="com.defult.eliran.movielibrery.MainActivity"
+    android:weightSum="2"
+    android:layoutDirection="ltr"
+    android:background="@drawable/metalmainback">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/MovieLV"
+        android:layout_weight="1.8"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:clickable="true"
+        app:srcCompat="@drawable/plusbutton"
+        android:id="@+id/PlusBtn"
+        android:layout_weight="0.2"
+        android:layout_gravity="bottom|end"
+        app:backgroundTint="@android:color/transparent"
+        app:fabSize="mini"
+        android:layout_height="75dp"
+        android:layout_width="75dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="50dp" />
+
+
+</FrameLayout>

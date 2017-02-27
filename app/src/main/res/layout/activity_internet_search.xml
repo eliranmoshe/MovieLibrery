@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_internet_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.defult.eliran.movielibrery.InternetSearchAct"
+    android:weightSum="4"
+    android:layoutDirection="ltr"
+    android:background="@drawable/internetbackgroung">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:weightSum="3">
+
+        <TextView
+            android:text="@string/SearTV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/searchIntTV"
+            android:layout_weight="0.7"
+            android:textSize="18sp"
+            android:textColor="@android:color/background_light"
+            android:gravity="center_vertical" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/SearchIntET"
+            android:layout_weight="1.6"
+            android:hint="@string/SearchET"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/background_light" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/SearchIntBtn"
+            android:layout_weight="0.7"
+            android:background="@drawable/searchbtn" />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:id="@+id/IntSrchLV" />
+
+    <Button
+        android:text="@string/CancelBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/CancelIntBtn"
+        android:layout_weight="0.5"
+        android:background="@drawable/cancelbutton"
+        android:textColor="@android:color/background_light" />
+
+</LinearLayout>

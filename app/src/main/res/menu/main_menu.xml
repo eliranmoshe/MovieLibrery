@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/menuItem"
+        android:id="@+id/DelAllItem" />
+    <item android:title="@string/ExitmenuItem"
+        android:id="@+id/ExitItem" />
+    <item android:title="@string/DelMarkesItem"
+        android:id="@+id/DelWatchItem" />
+</menu>

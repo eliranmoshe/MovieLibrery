@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_edit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.defult.eliran.movielibrery.AddEditAct"
+    android:weightSum="5"
+    android:layoutDirection="ltr"
+    android:background="@drawable/metalback">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.7"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/editLayout">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/cc"
+            android:id="@+id/movieIV" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:weightSum="2">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/MovieNameET"
+            android:layout_weight="2"
+            android:hint="@string/MovieNameET"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHint="@android:color/background_light" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.2"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:weightSum="1">
+
+            <Button
+                android:text="@string/RatingTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/RatingBtn"
+                android:layout_weight="0.3"
+                android:background="@drawable/starbtn"
+                android:textColor="@android:color/background_light" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/UrlET"
+                android:hint="@string/UrlET"
+                android:layout_weight="0.7"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/background_light" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/BodyETSV"
+            android:layout_weight="1.2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/yy"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/BodyET"
+                    android:hint="@string/BodyET"
+                    android:shadowColor="@color/colorAccent"
+                    android:textColor="@android:color/white"
+                    android:layout_height="180dp"
+                    android:textColorHint="@android:color/background_light" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/stamTV"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/OkBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/OkBtn"
+            android:layout_weight="1"
+            android:background="@drawable/cancelbutton"
+            android:textColor="@android:color/background_light" />
+
+        <Button
+            android:text="@string/CancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/CancelBtn"
+            android:layout_weight="1"
+            android:background="@drawable/cancelbutton"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ShowBtn"
+            android:background="@drawable/camerabtn"
+            android:textSize="8sp"
+            android:textColor="@android:color/background_light"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</LinearLayout>
