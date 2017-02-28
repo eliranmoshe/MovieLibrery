@@ -152,7 +152,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.CameraMenu:
-                                if (checkSelfPermission(Manifest.permission.CAMERA)
+                                if (checkSelfPermission(Manifest.permission.READ_CONTACTS)
                                         != PackageManager.PERMISSION_GRANTED) {
                                     requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
                                 }
