@@ -42,4 +42,6 @@
     <string name="RatingET">ADD RATING</string>
     <string name="SHAREITEM">SHARE</string>
     <string name="ChooseFromGallery">CHOOSE FROM GALLERY</string>
+    <string name="cameramenu">CHOSE CAMERA</string>
+    <string name="cameramenudown">DOWNLOAD  IMAGE</string>
 </resources>

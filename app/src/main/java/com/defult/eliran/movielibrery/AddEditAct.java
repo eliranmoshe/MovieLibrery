@@ -144,17 +144,35 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.ShowBtn:
                 //set image bitmap with decode
-                //TODO permission to camera
+                android.widget.PopupMenu popupMenu = new android.widget.PopupMenu(getApplicationContext(), v);
+                popupMenu.inflate(R.menu.cameramenu);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new android.widget.PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.CameraMenu:
+                                if (checkSelfPermission(Manifest.permission.CAMERA)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+                                }
+                                break;
+                            case R.id.DownImageMenu:
+
+
+
+                                break;
+                        }
+                        return true;
+                    }
+                });
                 //TODO if its from edit make add show image url button or film from camera
-                if (checkSelfPermission(Manifest.permission.READ_CONTACTS)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+
 
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant
 
-                    return;
-                }
+
 
                 break;
             case R.id.OkBtn:
