@@ -33,6 +33,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -159,10 +161,13 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                                 break;
                             case R.id.DownImageMenu:
 
-
+                                Picasso.with(AddEditAct.this).load(UrlET.getText().toString()).into(movieIV);
+                                //TODO set bitmap to imagebase64
 
                                 break;
+                            //TODO chose from gallery
                         }
+
                         return true;
                     }
                 });
