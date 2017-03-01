@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -168,6 +169,10 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                                 } else {
                                     Toast.makeText(AddEditAct.this, "no image to download", Toast.LENGTH_SHORT).show();
                                 }
+                                break;
+                            case R.id.chosefromgallery:
+                                Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(i, 4);
                                 break;
                             //TODO chose from gallery
                         }
@@ -379,6 +384,21 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 linearLayout.setBackground(movieIV.getDrawable());
             }
 
+        }
+        //TODO this request code doeasnt work
+        if (requestCode==4)
+        {
+            if (resultCode==-1)
+            {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+                movieIV.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            }
         }
 
     }
