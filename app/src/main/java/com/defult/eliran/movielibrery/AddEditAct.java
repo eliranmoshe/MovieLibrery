@@ -45,6 +45,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+
+
 public class AddEditAct extends AppCompatActivity implements View.OnClickListener {
     //Edit exist movie | Add new Manual movie | Add new Internet Movie
     SqlHelper sqlHelper;
@@ -78,7 +80,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         MovieNameET = (EditText) findViewById(R.id.MovieNameET);
         BodyET = (EditText) findViewById(R.id.BodyET);
         RatingET = (Button) findViewById(R.id.RatingBtn);
-        linearLayout= (LinearLayout) findViewById(R.id.editLayout);
+        linearLayout = (LinearLayout) findViewById(R.id.editLayout);
         UrlET = (EditText) findViewById(R.id.UrlET);
         movieIV = (ImageView) findViewById(R.id.movieIV);
         //movieIV.setVisibility(View.INVISIBLE);
@@ -108,8 +110,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
             MovieNameET.setText(movieName);
             UrlET.setText(ImageUrl);
         }
-        if (DbConstant.isInternetAct==false)
-        {
+        if (DbConstant.isInternetAct == false) {
             Bitmap bitmap = ((BitmapDrawable) movieIV.getDrawable()).getBitmap();
             movieIV.setImageBitmap(bitmap);
         }
@@ -131,8 +132,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ImageFullScreenintent=new Intent(AddEditAct.this,ImageFullScreenAct.class);
-                ImageFullScreenintent.putExtra(DbConstant.imagebase64,imagebase64);
+                Intent ImageFullScreenintent = new Intent(AddEditAct.this, ImageFullScreenAct.class);
+                ImageFullScreenintent.putExtra(DbConstant.imagebase64, imagebase64);
                 startActivity(ImageFullScreenintent);
             }
         });
@@ -174,201 +175,193 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 //TODO if its from edit make add show image url button or film from camera
 
 
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant
-
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant
 
 
                 break;
             case R.id.OkBtn:
 
-                String movienameET=MovieNameET.getText().toString();
-                movienameET=movienameET.trim();
-                if (movienameET.length()>0) {
+                String movienameET = MovieNameET.getText().toString();
+                movienameET = movienameET.trim();
+                ContentValues contentValues = new ContentValues();
+                if (movienameET.length() > 0) {
                     Bitmap bitmap = ((BitmapDrawable) movieIV.getDrawable()).getBitmap();
                     //Save the data to SqlHelper
-                    ContentValues contentValues = new ContentValues();
+
                     contentValues.put(DbConstant.ismarkedCB, "0");
                     contentValues.put(DbConstant.ImdbID, bodyId);
                     contentValues.put(DbConstant.moviename, movienameET);
                     contentValues.put(DbConstant.body, BodyET.getText().toString());
                     contentValues.put(DbConstant.urlpath, UrlET.getText().toString());
                     contentValues.put(DbConstant.rating, RatingET.getText().toString());
-                    if (DbConstant.isInternetAct == true) {
-                        if (imagebase64 == null) {
-                            imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
-                        }
-                        contentValues.put(DbConstant.imagebase64, imagebase64);
-                    } else if (DbConstant.isInternetAct == false) {
-                        if (imagebase64==null) {
-                            imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
-                        }
-
-                        contentValues.put(DbConstant.imagebase64, imagebase64);
-                        Log.d("vfdfdvfdsv", "bgdbgfdg");
-                    }
-                    if (DbConstant.isEditAct == true) {
-                        //update the SqlHepler to current movie
-                        String[] delid = new String[]{"" + EditId};
-                        sqlHelper.getWritableDatabase().update(DbConstant.tablename, contentValues, "_id=?", delid);
-                        intentToMain();
-                    }
-                    if (DbConstant.isEditAct == false) {
-                        //Add a New MovieObj to SqlHelper
-                        // sqlHelper.getWritableDatabase().insert(DbConstant.tablename,null,contentValues);
-                        cursor = sqlHelper.getReadableDatabase().query(DbConstant.tablename, new String[]{DbConstant.moviename}, null, null, null, null, null);
-
-                        while (cursor.moveToNext()) {
-                            //cheking if the movie exist
-                            String moviename = cursor.getString(cursor.getColumnIndex(DbConstant.moviename));
-                            if (moviename.equals(MovieNameET.getText().toString())) {
-
-                                exist = true;
-                            }
-                        }
-                        if (exist == true) {
-                            Toast.makeText(AddEditAct.this, "movie exist", Toast.LENGTH_SHORT).show();
-                        } else if (exist == false) {
-                            sqlHelper.getWritableDatabase().insert(DbConstant.tablename, null, contentValues);
-                            Log.d("hbgfd", "bvfc");
-                            intentToMain();
-
-                        }
-                    }
-
+                    imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
+                    contentValues.put(DbConstant.imagebase64, imagebase64);
                 }
-                else {
+                else{
                     Toast.makeText(this, "please enter movie name", Toast.LENGTH_SHORT).show();
                 }
-
-
-                break;
-            case R.id.CancelBtn:
-                //TODO how to make that if there is no changes dont alert dialogd
-                AlertDialog.Builder alert = new AlertDialog.Builder(AddEditAct.this);
-                alert.setIcon(R.drawable.download);
-                //getResources().getString(R.string.nassage);
-                alert.setMessage("ALL DETAILS WILL BE LOST\n" + "ARE YOU SURE YOU WANT TO BACK")
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("STAY", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                alert.setTitle("WARNING");
-                alert.create().show();
-                break;
-        }
-
-    }
-
-    public class DownLoadBody extends AsyncTask<String, Long, String> {
-        //if AddEditAct start From InternetAct Auto start AsyncTask to download the Body
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            // popup progressdialog while loading movie body
-            progressDialog = new ProgressDialog(AddEditAct.this);
-            progressDialog.setTitle("loading data111! \n please wait.....");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            //get the api of the ImdbID
-            StringBuilder response = null;
-            response = new StringBuilder();
-            try {
-                URL website = new URL(params[0]);
-                URLConnection connection = website.openConnection();
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(
-                                connection.getInputStream()));
-
-                String inputLine;
-                while ((inputLine = in.readLine()) != null)
-                    response.append(inputLine);
-                in.close();
-
-            } catch (Exception ee) {
-                ee.printStackTrace();
-            }
-            if (response == null) {
-                response.append("error");
-            }
-
-            return response.toString();
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String resultObject) {
-            //convert Api to JSON and SetText to BodyET
-            try {
-                if (resultObject == "error") {
-                    Toast.makeText(AddEditAct.this, "DID NOT FIND MOVIE,PLEASE TRY AGAIN.", Toast.LENGTH_SHORT).show();
-                } else {
-                    JSONObject mainObject = new JSONObject(resultObject);
-                    Log.d("************dsds", resultObject);
-                    BodyET.setText(mainObject.getString("Plot"));
-                    RatingET.setText(mainObject.getString("imdbRating"));
-                    progressDialog.dismiss();
+                if (DbConstant.isEditAct == true) {
+                    //update the SqlHepler to current movie
+                    String[] delid = new String[]{"" + EditId};
+                    sqlHelper.getWritableDatabase().update(DbConstant.tablename, contentValues, "_id=?", delid);
+                    intentToMain();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+                if (DbConstant.isEditAct == false) {
+                    //Add a New MovieObj to SqlHelper
+                    // sqlHelper.getWritableDatabase().insert(DbConstant.tablename,null,contentValues);
+                    cursor = sqlHelper.getReadableDatabase().query(DbConstant.tablename, new String[]{DbConstant.moviename}, null, null, null, null, null);
+
+                    while (cursor.moveToNext()) {
+                        //cheking if the movie exist
+                        String moviename = cursor.getString(cursor.getColumnIndex(DbConstant.moviename));
+                        if (moviename.equals(MovieNameET.getText().toString())) {
+
+                            exist = true;
+                        }
+                    }
+                    if (exist == true) {
+                        Toast.makeText(AddEditAct.this, "movie exist", Toast.LENGTH_SHORT).show();
+                    } else if (exist == false) {
+                        sqlHelper.getWritableDatabase().insert(DbConstant.tablename, null, contentValues);
+                        Log.d("hbgfd", "bvfc");
+                        intentToMain();
+
+                    }
+                }
+
+
+
+
+
+        break;
+        case R.id.CancelBtn:
+        //TODO how to make that if there is no changes dont alert dialogd
+        AlertDialog.Builder alert = new AlertDialog.Builder(AddEditAct.this);
+        alert.setIcon(R.drawable.download);
+        //getResources().getString(R.string.nassage);
+        alert.setMessage("ALL DETAILS WILL BE LOST\n" + "ARE YOU SURE YOU WANT TO BACK")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("STAY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alert.setTitle("WARNING");
+        alert.create().show();
+        break;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected void onPreExecute() {
-            progressDialog = new ProgressDialog(AddEditAct.this);
-            progressDialog.setTitle("loading data222! \n please wait.....");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-            super.onPreExecute();
+}
+
+public class DownLoadBody extends AsyncTask<String, Long, String> {
+    //if AddEditAct start From InternetAct Auto start AsyncTask to download the Body
+    ProgressDialog progressDialog;
+
+    @Override
+    protected void onPreExecute() {
+        // popup progressdialog while loading movie body
+        progressDialog = new ProgressDialog(AddEditAct.this);
+        progressDialog.setTitle("loading data111! \n please wait.....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+        //get the api of the ImdbID
+        StringBuilder response = null;
+        response = new StringBuilder();
+        try {
+            URL website = new URL(params[0]);
+            URLConnection connection = website.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            connection.getInputStream()));
+
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+            in.close();
+
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
+        if (response == null) {
+            response.append("error");
         }
 
-        //when pressed the ShowBtn start the imageUrl AsyncTask
-        protected Bitmap doInBackground(String... urls) {
-            //get the image from Url
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+        return response.toString();
+
+
+    }
+
+    @Override
+    protected void onPostExecute(String resultObject) {
+        //convert Api to JSON and SetText to BodyET
+        try {
+            if (resultObject == "error") {
+                Toast.makeText(AddEditAct.this, "DID NOT FIND MOVIE,PLEASE TRY AGAIN.", Toast.LENGTH_SHORT).show();
+            } else {
+                JSONObject mainObject = new JSONObject(resultObject);
+                Log.d("************dsds", resultObject);
+                BodyET.setText(mainObject.getString("Plot"));
+                RatingET.setText(mainObject.getString("imdbRating"));
+                progressDialog.dismiss();
             }
-            return mIcon11;
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-        protected void onPostExecute(Bitmap result) {
-            //set the image to image view
-            bitmap = result;
-            imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
-            movieIV.setImageBitmap(decodeBase64(imagebase64));
-            //linearLayout.setBackground(movieIV.getDrawable());
-            progressDialog.dismiss();
-            activity_add_edit.setFocusable(true);
-            activity_add_edit.getDrawingCache(true);
-
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
+}
+
+public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    @Override
+    protected void onPreExecute() {
+        progressDialog = new ProgressDialog(AddEditAct.this);
+        progressDialog.setTitle("loading data222! \n please wait.....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        super.onPreExecute();
+    }
+
+    //when pressed the ShowBtn start the imageUrl AsyncTask
+    protected Bitmap doInBackground(String... urls) {
+        //get the image from Url
+        String urldisplay = urls[0];
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    protected void onPostExecute(Bitmap result) {
+        //set the image to image view
+        bitmap = result;
+        imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
+        movieIV.setImageBitmap(decodeBase64(imagebase64));
+        //linearLayout.setBackground(movieIV.getDrawable());
+        progressDialog.dismiss();
+        activity_add_edit.setFocusable(true);
+        activity_add_edit.getDrawingCache(true);
+
+    }
+
+}
 
     ProgressDialog progressDialog;
 
@@ -393,7 +386,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 imagebase64 = encodeToBase64(image, Bitmap.CompressFormat.JPEG, 100);
                 movieIV.setImageBitmap(decodeBase64(imagebase64));
                 linearLayout.setBackground(movieIV.getDrawable());
-                }
+            }
 
         }
 
@@ -414,8 +407,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         }
         return true;
     }
-    public void intentToMain()
-    {
+
+    public void intentToMain() {
         Intent i = new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
