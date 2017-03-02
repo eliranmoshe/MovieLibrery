@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,10 +19,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -41,7 +37,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -105,8 +100,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
             ShowBtn.setVisibility(View.INVISIBLE);
             UrlET.setVisibility(View.INVISIBLE);
             if (ImageUrl.contains("https://")) {
-                DownloadImageTask downloadImageTask = new DownloadImageTask();
-                downloadImageTask.execute(ImageUrl);
+                Picasso.with(AddEditAct.this).load(ImageUrl).into(movieIV);
             }
             MovieNameET.setText(movieName);
             UrlET.setText(ImageUrl);
@@ -133,6 +127,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bitmap bitmap = ((BitmapDrawable) movieIV.getDrawable()).getBitmap();
+                imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
                 Intent ImageFullScreenintent = new Intent(AddEditAct.this, ImageFullScreenAct.class);
                 ImageFullScreenintent.putExtra(DbConstant.imagebase64, imagebase64);
                 startActivity(ImageFullScreenintent);
@@ -171,10 +167,10 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                                     Toast.makeText(AddEditAct.this, "no image to download", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
-                            case R.id.chosefromgallery:
+                            /*case R.id.chosefromgallery:
                                 Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                 startActivityForResult(i, 4);
-                                break;
+                                break;*/
                             //TODO chose from gallery
                         }
                         return true;
@@ -189,9 +185,10 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 if (movienameET.length() > 0) {
                     Bitmap bitmap = ((BitmapDrawable) movieIV.getDrawable()).getBitmap();
                     //Save the data to SqlHelper
-
-                    contentValues.put(DbConstant.ismarkedCB, "0");
-                    contentValues.put(DbConstant.ImdbID, bodyId);
+                    if (DbConstant.isEditAct==false) {
+                        contentValues.put(DbConstant.ismarkedCB, "0");
+                        contentValues.put(DbConstant.ImdbID, bodyId);
+                    }
                     contentValues.put(DbConstant.moviename, movienameET);
                     contentValues.put(DbConstant.body, BodyET.getText().toString());
                     contentValues.put(DbConstant.urlpath, UrlET.getText().toString());
@@ -234,26 +231,33 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.CancelBtn:
                 //TODO how to make that if there is no changes dont alert dialogd
-                AlertDialog.Builder alert = new AlertDialog.Builder(AddEditAct.this);
-                alert.setIcon(R.drawable.download);
-                //getResources().getString(R.string.nassage);
-                alert.setMessage("ALL DETAILS WILL BE LOST\n" + "ARE YOU SURE YOU WANT TO BACK")
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("STAY", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                alert.setTitle("WARNING");
-                alert.create().show();
+                if (!MovieNameET.getText().toString().equals("")) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(AddEditAct.this);
+                    alert.setIcon(R.drawable.exclamationark);
+                    //getResources().getString(R.string.nassage);
+                    alert.setMessage("ALL CHANGES WILL BE LOST\n" + "ARE YOU SURE YOU WANT TO BACK")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("STAY", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alert.setTitle("WARNING");
+                    alert.create().show();
+                }
+                else
+                {
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
+                }
                 break;
         }
 
@@ -267,7 +271,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         protected void onPreExecute() {
             // popup progressdialog while loading movie body
             progressDialog = new ProgressDialog(AddEditAct.this);
-            progressDialog.setTitle("loading data111! \n please wait.....");
+            progressDialog.setTitle("loading data! \n please wait.....");
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -320,11 +324,11 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+ /*   public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(AddEditAct.this);
-            progressDialog.setTitle("loading data222! \n please wait.....");
+            progressDialog.setTitle("loading data! \n please wait.....");
             progressDialog.setCancelable(false);
             progressDialog.show();
             super.onPreExecute();
@@ -360,7 +364,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog;*/
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -406,21 +410,21 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.edit_act_main_menu, menu);
         return true;
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
             //TODO get picture from gallery
         }
         return true;
-    }
+    }*/
 
     public void intentToMain() {
         Intent i = new Intent(this, MainActivity.class);

@@ -5,6 +5,4 @@
         android:id="@+id/CameraMenu" />
     <item android:title="@string/cameramenudown"
         android:id="@+id/DownImageMenu" />
-    <item android:title="CHOOSE FROM GALLERY"
-        android:id="@+id/chosefromgallery" />
 </menu>
