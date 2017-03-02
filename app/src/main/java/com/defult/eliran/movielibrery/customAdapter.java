@@ -67,7 +67,8 @@ public class customAdapter extends CursorAdapter {
         } else {
             watchcB.setChecked(false);
         }
-        movieItemTV.setText(cursor.getString(cursor.getColumnIndex(DbConstant.moviename)));
+        String moviename=cursor.getString(cursor.getColumnIndex(DbConstant.moviename));
+        movieItemTV.setText(moviename);
         RatingItemTV.setText(cursor.getString(cursor.getColumnIndex(DbConstant.rating)));
        /* if (cursor.getString(cursor.getColumnIndex(DbConstant.imagebase64)).equals("")) {
             movieIV.setImageResource(R.drawable.video);

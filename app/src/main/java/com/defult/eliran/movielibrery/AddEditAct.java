@@ -112,12 +112,13 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         if (DbConstant.isEditAct == true) {
             //if getting from Edit option from MainActivity Set all data to EditText
             Intent intent = getIntent();
-            MovieNameET.setText(intent.getStringExtra("movie"));
-            BodyET.setText(intent.getStringExtra("body"));
-            EditId = intent.getStringExtra("id");
-            UrlET.setText(intent.getStringExtra("urlpath"));
-            imagebase64 = intent.getStringExtra("imagebase64");
-            RatingET.setText(intent.getStringExtra("rating"));
+            MovieObj currentmovie=intent.getParcelableExtra("editmovie");
+            MovieNameET.setText(currentmovie.MovieName);
+            BodyET.setText(currentmovie.Body);
+            EditId = currentmovie.id;
+            UrlET.setText(currentmovie.Url);
+            imagebase64 = currentmovie.imagebase64;
+            RatingET.setText(currentmovie.imdbRating);
             if (!imagebase64.equals("")) {
                 movieIV.setImageBitmap(decodeBase64(imagebase64));
                 //linearLayout.setBackground(movieIV.getDrawable());
@@ -179,17 +180,17 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.OkBtn:
 
-                String movienameET = MovieNameET.getText().toString();
-                movienameET = movienameET.trim();
+                String moviename = MovieNameET.getText().toString();
+                moviename = moviename.trim();
                 ContentValues contentValues = new ContentValues();
-                if (movienameET.length() > 0) {
+                if (moviename.length() > 0) {
                     Bitmap bitmap = ((BitmapDrawable) movieIV.getDrawable()).getBitmap();
                     //Save the data to SqlHelper
                     if (DbConstant.isEditAct==false) {
                         contentValues.put(DbConstant.ismarkedCB, "0");
                         contentValues.put(DbConstant.ImdbID, bodyId);
                     }
-                    contentValues.put(DbConstant.moviename, movienameET);
+                    contentValues.put(DbConstant.moviename, moviename);
                     contentValues.put(DbConstant.body, BodyET.getText().toString());
                     contentValues.put(DbConstant.urlpath, UrlET.getText().toString());
                     contentValues.put(DbConstant.rating, RatingET.getText().toString());
@@ -211,8 +212,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
 
                     while (cursor.moveToNext()) {
                         //cheking if the movie exist
-                        String moviename = cursor.getString(cursor.getColumnIndex(DbConstant.moviename));
-                        if (moviename.equals(MovieNameET.getText().toString())) {
+                        String currentmoviename = cursor.getString(cursor.getColumnIndex(DbConstant.moviename));
+                        if (currentmoviename.equals(MovieNameET.getText().toString())) {
 
                             exist = true;
                         }
@@ -324,7 +325,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
         }
     }
 
- /*   public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+ /*  public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(AddEditAct.this);
@@ -410,21 +411,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
 
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.edit_act_main_menu, menu);
-        return true;
-    }*/
-
-  /*  @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            //TODO get picture from gallery
-        }
-        return true;
-    }*/
 
     public void intentToMain() {
         Intent i = new Intent(this, MainActivity.class);

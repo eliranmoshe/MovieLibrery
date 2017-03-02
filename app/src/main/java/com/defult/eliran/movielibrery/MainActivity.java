@@ -223,12 +223,10 @@ public class MainActivity extends AppCompatActivity {
     public void intenttoedit(String id) {
         //start an intent to AddEditAct with All data about the movie that the user choose
         Intent intent = new Intent(MainActivity.this, AddEditAct.class);
-        intent.putExtra("id", id);
-        intent.putExtra("movie", cursor.getString(cursor.getColumnIndex(DbConstant.moviename)));
-        intent.putExtra("body", cursor.getString(cursor.getColumnIndex(DbConstant.body)));
-        intent.putExtra("urlpath", cursor.getString(cursor.getColumnIndex(DbConstant.urlpath)));
-        intent.putExtra("imagebase64",cursor.getString(cursor.getColumnIndex(DbConstant.imagebase64)));
-        intent.putExtra("rating",cursor.getString(cursor.getColumnIndex(DbConstant.rating)));
+        MovieObj editmovie=new MovieObj(cursor.getString(cursor.getColumnIndex(DbConstant.moviename)),cursor.getString(cursor.getColumnIndex(DbConstant.urlpath)),
+                cursor.getString(cursor.getColumnIndex(DbConstant.body)), cursor.getString(cursor.getColumnIndex(DbConstant.rating)),
+                cursor.getString(cursor.getColumnIndex(DbConstant.imagebase64)),id );
+        intent.putExtra("editmovie",editmovie);
         DbConstant.isEditAct = true;
         DbConstant.isInternetAct = false;
         startActivity(intent);
