@@ -78,11 +78,17 @@ public class InternetSearchAct extends AppCompatActivity {
                 //Start AsyncTask to omdb and get Movies list
                 DownLoadWebSite downLoadWebSite = new DownLoadWebSite();
                 String searchet = SearchET.getText().toString();
-                try {
-                    String url = URLEncoder.encode(searchet, "UTF-8");
-                    downLoadWebSite.execute(LinkToApi + url);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                searchet=searchet.trim();
+                if (searchet.length()>0) {
+                    try {
+                        String url = URLEncoder.encode(searchet, "UTF-8");
+                        downLoadWebSite.execute(LinkToApi + url);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    Toast.makeText(InternetSearchAct.this, "please insert name of movie", Toast.LENGTH_SHORT).show();
                 }
                 searchTV.requestFocus();
 
