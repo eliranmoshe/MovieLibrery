@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -232,27 +233,29 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.CancelBtn:
                 //TODO how to make that if there is no changes dont alert dialogd
-                if (!MovieNameET.getText().toString().equals("")) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(AddEditAct.this);
-                    alert.setIcon(R.drawable.exclamationark);
-                    //getResources().getString(R.string.nassage);
-                    alert.setMessage("ALL CHANGES WILL BE LOST\n" + "ARE YOU SURE YOU WANT TO BACK")
-                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
-                                    dialog.cancel();
-                                }
-                            })
-                            .setNegativeButton("STAY", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                    alert.setTitle("WARNING");
-                    alert.create().show();
+                if (DbConstant.isInternetAct==false) {
+                    if (!MovieNameET.getText().toString().equals("")) {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(AddEditAct.this);
+                        alert.setIcon(R.drawable.exclamationark);
+                        //getResources().getString(R.string.nassage);
+                        alert.setMessage("ALL CHANGES WILL BE LOST\n" + "ARE YOU SURE YOU WANT TO BACK")
+                                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setNegativeButton("STAY", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        alert.setTitle("WARNING");
+                        alert.create().show();
+                    }
                 }
                 else
                 {
