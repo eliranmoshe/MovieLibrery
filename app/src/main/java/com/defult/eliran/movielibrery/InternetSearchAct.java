@@ -11,8 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -71,26 +74,27 @@ public class InternetSearchAct extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_righ);
             }
         });
+        SearchET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH)
+                {
+                    searchonInternet();
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    return  true;
+                }
+                return false;
+            }
+        });
         GoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //start the AsyncTask to search a movies
                 //Start AsyncTask to omdb and get Movies list
-                DownLoadWebSite downLoadWebSite = new DownLoadWebSite();
-                String searchet = SearchET.getText().toString();
-                searchet=searchet.trim();
-                if (searchet.length()>0) {
-                    try {
-                        String url = URLEncoder.encode(searchet, "UTF-8");
-                        downLoadWebSite.execute(LinkToApi + url);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else {
-                    Toast.makeText(InternetSearchAct.this, "please insert name of movie", Toast.LENGTH_SHORT).show();
-                }
-                searchTV.requestFocus();
+                searchonInternet();
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
 
             }
@@ -206,6 +210,24 @@ public class InternetSearchAct extends AppCompatActivity {
         }
     }
 
+    public  void  searchonInternet()
+    {
+        DownLoadWebSite downLoadWebSite = new DownLoadWebSite();
+        String searchet = SearchET.getText().toString();
+        searchet=searchet.trim();
+        if (searchet.length()>0) {
+            try {
+                String url = URLEncoder.encode(searchet, "UTF-8");
+                downLoadWebSite.execute(LinkToApi + url);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Toast.makeText(InternetSearchAct.this, "please insert name of movie", Toast.LENGTH_SHORT).show();
+        }
 
+        searchTV.requestFocus();
+    }
 }
 

@@ -38,6 +38,7 @@
             android:layout_weight="1.6"
             android:hint="@string/SearchET"
             android:textSize="14sp"
+            android:imeOptions="actionSearch"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/background_light" />
 

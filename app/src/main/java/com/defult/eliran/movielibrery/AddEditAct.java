@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,10 +37,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import static android.R.attr.targetSdkVersion;
 
 
 public class AddEditAct extends AppCompatActivity implements View.OnClickListener {
@@ -157,9 +157,17 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                         switch (item.getItemId()) {
 
                             case R.id.CameraMenu:
-                                if (checkSelfPermission(Manifest.permission.READ_CONTACTS)
-                                        != PackageManager.PERMISSION_GRANTED) {
-                                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                                    if (targetSdkVersion >= Build.VERSION_CODES.M) {
+                                        if (checkSelfPermission(Manifest.permission.READ_CONTACTS)
+                                                != PackageManager.PERMISSION_GRANTED) {
+                                            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+                                        }
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(AddEditAct.this, "sdk under 23", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
                             case R.id.DownImageMenu:

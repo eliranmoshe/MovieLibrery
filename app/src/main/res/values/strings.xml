@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieLibrery</string>
+    <string name="app_name">My MovieLAb</string>
     <string name="menuItem">CLEAR ALL</string>
     <string name="ExitmenuItem">EXIT</string>
     <string name="EditItem">EDIT MOVIE</string>
