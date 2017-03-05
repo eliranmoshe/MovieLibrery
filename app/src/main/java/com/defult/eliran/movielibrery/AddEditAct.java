@@ -167,7 +167,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                                     }
                                 }
                                 else {
-                                    Toast.makeText(AddEditAct.this, "sdk under 23", Toast.LENGTH_SHORT).show();
+                                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                    startActivityForResult(cameraIntent, 2);
                                 }
                                 break;
                             case R.id.DownImageMenu:
@@ -188,7 +189,7 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                 });
                 break;
             case R.id.OkBtn:
-
+                boolean nomoviename=false;
                 String moviename = MovieNameET.getText().toString();
                 moviename = moviename.trim();
                 ContentValues contentValues = new ContentValues();
@@ -206,7 +207,8 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                     imagebase64 = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100);
                     contentValues.put(DbConstant.imagebase64, imagebase64);
                 } else {
-                    Toast.makeText(this, "please enter movie name", Toast.LENGTH_SHORT).show();
+
+                    nomoviename=true;
                 }
                 if (DbConstant.isEditAct == true) {
                     //update the SqlHepler to current movie
@@ -230,9 +232,15 @@ public class AddEditAct extends AppCompatActivity implements View.OnClickListene
                     if (exist == true) {
                         Toast.makeText(AddEditAct.this, "movie exist", Toast.LENGTH_SHORT).show();
                     } else if (exist == false) {
-                        sqlHelper.getWritableDatabase().insert(DbConstant.tablename, null, contentValues);
-                        Log.d("hbgfd", "bvfc");
-                        intentToMain();
+                        if (nomoviename==true)
+                        {
+                            Toast.makeText(this, "please enter movie name", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            sqlHelper.getWritableDatabase().insert(DbConstant.tablename, null, contentValues);
+                            Log.d("hbgfd", "bvfc");
+                            intentToMain();
+                        }
 
                     }
                 }
