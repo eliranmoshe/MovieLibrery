@@ -19,6 +19,10 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 public class MainActivity extends AppCompatActivity {
     SqlHelper sqlHelper;
     Cursor cursor;
@@ -30,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-6655727907980016/9454071283");
         MovieLV = (ListView) findViewById(R.id.MovieLV);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         sqlHelper = new SqlHelper(this);
         cursor = sqlHelper.getReadableDatabase().query(DbConstant.tablename, null, null, null, null, null, null);
         adapter=new customAdapter(this,cursor);

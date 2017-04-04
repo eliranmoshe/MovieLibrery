@@ -1,0 +1,117 @@
+{
+  "project_info": {
+    "project_number": "899326955231",
+    "firebase_url": "https://taptheball-be52b.firebaseio.com",
+    "project_id": "taptheball-be52b",
+    "storage_bucket": "taptheball-be52b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899326955231:android:176d0767a56cf261",
+        "android_client_info": {
+          "package_name": "eliran.taptheball.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899326955231-jhi1b1bhlqiv13u17f9f1ucovm9mea7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAih2TxUlOf5TGJ1HY9ALX4B3N2_viDY6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899326955231:android:0c29da6f76e7e6e0",
+        "android_client_info": {
+          "package_name": "eliran.taptheball.com.taptheball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899326955231-t1kcgm06h6fmlv3stp5ofmujvlihkprg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eliran.taptheball.com.taptheball",
+            "certificate_hash": "e93c319625d72afc6f5ffb138a917711e943c64c"
+          }
+        },
+        {
+          "client_id": "899326955231-jhi1b1bhlqiv13u17f9f1ucovm9mea7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAih2TxUlOf5TGJ1HY9ALX4B3N2_viDY6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899326955231-jhi1b1bhlqiv13u17f9f1ucovm9mea7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899326955231:android:a7e0a19eaea68961",
+        "android_client_info": {
+          "package_name": "com.defult.eliran.movielibrery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899326955231-jhi1b1bhlqiv13u17f9f1ucovm9mea7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAih2TxUlOf5TGJ1HY9ALX4B3N2_viDY6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
